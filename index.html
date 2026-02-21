@@ -846,19 +846,86 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 </script>
 
+
+<style>
+/* Input code wrapping (editor area) */
+.sagecell .CodeMirror {
+    height: auto !important;
+}
+
+/* Membuat teks dalam CodeMirror bisa wrap */
+.sagecell .CodeMirror pre {
+    white-space: pre-wrap !important;
+    word-break: break-word !important;
+    overflow-wrap: break-word !important;
+}
+
+/* Output wrapping */
+.sagecell .sagecell_output pre {
+    white-space: pre-wrap !important;
+    word-break: break-word !important;
+    overflow-wrap: break-word !important;
+}
+
+/* Hilangkan horizontal scroll output */
+.sagecell .sagecell_output {
+    overflow-x: hidden !important;
+}
+</style>
+
+<style>
+.sagecell pre, 
+.sagecell code, 
+.sagecell_output pre {
+    white-space: pre-wrap !important;
+    word-break: break-word !important;
+    overflow-wrap: break-word !important;
+}
+</style>
+
+
+<style>
+.title-3d{
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: 0.5px;
+
+    /* Warna emas */
+    color: #d4af37;
+
+    /* Efek 3D emas */
+    text-shadow: 
+        1px 1px 0px #fff2c2,
+        2px 2px 0px #caa12a,
+        3px 3px 0px #a67c00,
+        4px 4px 8px rgba(0,0,0,0.35);
+
+    margin: 12px 0;
+
+    /* Supaya teks agak naik */
+    position: relative;
+    top: -10px;
+
+    padding: 4px 12px;  /* lebih tipis */
+	line-height: 1.1;   /* rapat */
+    display: inline-block;
+    border-radius: 12px;
+}
+
+.subtitle{
+    margin-top: -100px;
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+</style>
+
 </head>
 <body>
 <div class="container">
     <nav class="sidebar">
         <div class="logo">
-                <h2><i class="fas fa-calculator"></i>BiMath: Struktur Aljabar</h2>
+                <h2 class="title-3d"><i class="fas fa-calculator"></i>BiMath: Struktur Aljabar II</h2>
                 <p align="justify">Naskah akademik Interaktif menggunakan SageMath & $\pmb{\LaTeX}$</p>
-				<!-- Link Lab-Math di sini -->
-        <p class="lab-math-link">
-            <a href="https://subiono2021.github.io/Lab-Matematika/" target="_blank" onclick="event.stopPropagation();">
-                <i class="fas fa-flask"></i> <b>Lab-Matematika</b>
-            </a>
-        </p> 
          </div>
 		
             <ol start="0">
@@ -2019,12 +2086,10 @@ Q2=QuadraticField(2)
 a = 3+5*i
 b = 3/2 - 2*sqrt(2)
 
-pretty_print(html(r"Himpunan $\mathbb{Q}(\sqrt{2})$: %s"%Q2))
-pretty_print(html(r"Apakah $\mathbb{Q}(\sqrt{2})\ \mathbf{Daerah\ Integral}$?\
-$\color{red}{%s}$"%latex(Q2.is_integral_domain())))
-pretty_print(html(r"Apakah $3+5i\in\mathbb{Q}(\sqrt{2})$ ? $%s$"%latex(a in Q2)))
-pretty_print(html(r"Apakah $\frac{3}{2}-2\sqrt{2}\in\mathbb{Q}(\sqrt{2})$ ?\
-$%s$"%latex(b in Q2)))
+display(html(r"Himpunan $\mathbb{Q}(\sqrt{2})$: %s"%Q2))
+display(html(r"Apakah $\mathbb{Q}(\sqrt{2})\ \mathbf{Daerah\ Integral}$? $\color{red}{%s}$"%latex(Q2.is_integral_domain())))
+display(html(r"Apakah $3+5i\in\mathbb{Q}(\sqrt{2})$ ? $%s$"%latex(a in Q2)))
+display(html(r"Apakah $\frac{3}{2}-2\sqrt{2}\in\mathbb{Q}(\sqrt{2})$ ? $%s$"%latex(b in Q2)))
 </script>
 </div>
 <br>
@@ -2833,10 +2898,16 @@ Misalkan \(R\) adalah ring dengan elemen satuan \(1_R\). Maka
 </div>
 
 <div class="proof-box">
-<ol style='margin-left:5px;margin-right:5px;'>
-<li> Bila \(\left|1_R\right|=+\infty\), maka tidak akan ada bilangan bulat berhingga \(n\) yang memenuhi \(n.1_R=0_R\). Jadi \(\mbox{kar}(R)=0\). </li>
-<li> Bila \(\left|1_R\right|=n\), maka \(n\) adalah bilangan bulat positip terkecil yang memenuhi \(n.1_R=0_R\) dan untuk  semua \(a\in R\) didapat \(n.a=n(1_R.a)=(n.1_R)a=0_R.a=0_R\). Terlihat bahwa \(\mbox{kar}(R)=n\qquad\square\)</li>
-</ol>
+<p>
+<b>(1)</b> Bila \(\left|1_R\right|=+\infty\), maka tidak akan ada bilangan bulat berhingga \(n\) yang memenuhi \(n.1_R=0_R\). Jadi \(\mbox{kar}(R)=0\). 
+</p>
+<p>
+<b>(2)</b> Bila \(\left|1_R\right|=n\), maka \(n\) adalah bilangan bulat positip terkecil yang memenuhi \(n.1_R=0_R\) dan untuk  semua \(a\in R\) didapat
+ $$
+ n.a=n(1_R.a)=(n.1_R)a=0_R.a=0_R. 
+ $$
+ Terlihat bahwa \(\mbox{kar}(R)=n.\qquad\square\)
+</p>
 </div>
 </div>
 </div>
@@ -3148,12 +3219,9 @@ j2 = all([f(a*b)==f(a)*f(b) for a in Integers(4)\
 pretty_print(html(r"$\phi([n]_4)\stackrel{\mathrm{def}}{=}3*[n]_6, \forall [n]_4\in\mathbb{Z}_4$"))
 pretty_print(html(r"$\left\{\phi([n]_4)\mid [n]_4\in\mathbb{Z}_4\right\}\
 =%s\subset\mathbb{Z}_{6}$"%latex(r)))
-pretty_print(html(r"1. Apakah $\phi(a+b) = \phi(a)+\phi(b),\forall a,b\in\mathbb{Z}_4$ ?\
-$%s$"%latex(j1)))
-pretty_print(html(r"2. Apakah $\phi(a*b) = \phi(a)*\phi(b),\forall a,b\in\mathbb{Z}_4$ ?\
-$%s$"%latex(j2)))
-pretty_print(html(r"Terlihat bahwa $\phi :\mathbb{Z}_4\to\mathbb{Z}_6$ adalah suatu\
-homomorpisma ring."))
+pretty_print(html(r"1. Apakah $\phi(a+b) = \phi(a)+\phi(b),\forall a,b\in\mathbb{Z}_4$ ? $%s$"%latex(j1)))
+pretty_print(html(r"2. Apakah $\phi(a*b) = \phi(a)*\phi(b),\forall a,b\in\mathbb{Z}_4$ ? $%s$"%latex(j2)))
+pretty_print(html(r"Terlihat bahwa $\phi :\mathbb{Z}_4\to\mathbb{Z}_6$ adalah suatu homomorpisma ring."))
 </script>
 </div>
 <br>
@@ -3170,12 +3238,9 @@ j2 = all([g(a*b)==g(a)*g(b) for a in Integers(6)\
 pretty_print(html(r"$\phi([n]_6)\stackrel{\mathrm{def}}{=}4*[n]_{12},\forall [n]_6\in\mathbb{Z}_6$"))
 pretty_print(html(r"$\left\{\phi([n]_6)\mid [n]_4\in\mathbb{Z}_4\right\}\
 =%s\subset\mathbb{Z}_{12}$"%latex(p)))
-pretty_print(html(r"1. Apakah $\phi(a+b)=\phi(a)+\phi(b),\forall a,b\in\mathbb{Z}_6$ ?\
-$%s$"%latex(j1)))
-pretty_print(html(r"2. Apakah $\phi(a*b)=\phi(a)*\phi(b),\forall a,b\in\mathbb{Z}_6$ ?\
-$%s$"%latex(j2)))
-pretty_print(html(r"Terlihat bahwa $\phi :\mathbb{Z}_6\to\mathbb{Z}_{12}$\
-adalah suatu homomorpisma ring."))
+pretty_print(html(r"1. Apakah $\phi(a+b)=\phi(a)+\phi(b),\forall a,b\in\mathbb{Z}_6$ ? $%s$"%latex(j1)))
+pretty_print(html(r"2. Apakah $\phi(a*b)=\phi(a)*\phi(b),\forall a,b\in\mathbb{Z}_6$ ? $%s$"%latex(j2)))
+pretty_print(html(r"Terlihat bahwa $\phi :\mathbb{Z}_6\to\mathbb{Z}_{12}$ adalah suatu homomorpisma ring."))
 </script>
 </div>
 <br>
@@ -4105,8 +4170,11 @@ Misalkan \(\phi : R\to R'\) adalah suatu homomorpisma ring dengan kernel \(K=\ke
 
 <div class="proof-box">
 <p>
-Juga karena \(\phi : R\to R'\) adalah suatu homomorpisma grup terhadap operasi "\(+\)", maka pemetaan \(\chi : R/K\to\phi(R)\) didefinisikan oleh \(\chi(a+K)=\phi(a)\) adalah suatu pemetaan isomorpisma grup <span class="latex-trigger" onclick="toggleLatex(this)"> (<b>Torema Isomorpisma Pertama Grup</b>).
-<span class="latex-message">
+Juga karena \(\phi : R\to R'\) adalah suatu homomorpisma grup terhadap operasi "\(+\)", maka pemetaan \(\chi : R/K\to\phi(R)\) didefinisikan oleh 
+$$
+\chi(a+K)=\phi(a)
+$$ 
+adalah suatu pemetaan isomorpisma grup <span class="latex-trigger" onclick="toggleLatex(this)"> (<b>Torema Isomorpisma Pertama Grup</b>). <span class="latex-message">
  $\;$ Jika \( \varphi : G \to H \) adalah homomorpisma grup, maka
 $$G / \ker(\varphi) \cong \varphi(G).$$
 </span>
@@ -5120,7 +5188,7 @@ Bila \(\text{kar}(F)=0\), maka karena \(F\) juga merupakan daerah integral, deng
 bila \(\text{kar}(D)=0\), maka \(\mathbb{Z}\cong D'\subseteq D\). Bila \(\text{kar}(D)=p\), maka \(\mathbb{Z}_p\cong D'\subseteq D\).
            </span>
            </span> didapat 
-\[\mathbb{Z}\cong D'=\{n.1'\mid n\in\mathbb{Z} \}\subseteq F,\] dimana \(1'\) elemen satuan di \(F\) dan \(D'\) adalah suatu daerah integral termuat dalam lapangan \(F\), dengan demikian menggunakan 
+\[\mathbb{Z}\cong D'=\{n.1'\mid n\in\mathbb{Z} \}\subseteq F,\] dimana \(1'\) elemen satuan di \(F\) dan \(D'\) adalah suatu daerah integral termuat dalam lapangan \(F\), dengan demikian menggunakan hasil pernyataan
 <span class="latex-trigger" onclick="toggleLatex(this)">
         Kesimpulan 1.9.1.</b> 
         <span class="latex-message">
@@ -5682,8 +5750,7 @@ p = (f+g)/h
 pretty_print(html(r"Apakah $\mathbb{Z}[x]$ suatu Daerah Integral $%s$"\
                   %latex(R.is_integral_domain())))
 pretty_print(html(r"Apakah $\mathbb{Z}[x]$ suatu Lapangan ? $%s$"%latex(R.is_field())))
-pretty_print(html(r"Apakah Lapangan Pecahan $\mathbb{F}[x]$ dari Daerah Integral\
-$\mathbb{Z}[x]$ suatu Lapangan ? $%s$"%latex(P.is_field())))
+pretty_print(html(r"Apakah Lapangan Pecahan $\mathbb{F}[x]$ dari Daerah Integral $\mathbb{Z}[x]$ suatu Lapangan ? $%s$"%latex(P.is_field())))
 pretty_print(html(r"$f(x)=%s\in\mathbb{F}[x]$"%latex(f)))
 pretty_print(html(r"$g(x)=%s\in\mathbb{F}[x]$$"%latex(g)))
 pretty_print(html(r"$h(x)=%s\in\mathbb{F}[x]$$"%latex(h)))
@@ -5717,7 +5784,7 @@ pretty_print(html(r"$%s.\left(%s\right)^{-1} = %s$"%(latex(p),latex(p),latex(p*p
  
 <div class="subsection">
   <div class="subsection-header">
-    <h3>2.3 Algorima Pembagian Utuk Polinimial \(F[x]\) <span class="dropdown-icon">▼</span></h3>
+    <h3><span>2.3 Algorima Pembagian Utuk Polinomial \(F[x]\)</span> <span class="dropdown-icon">▼</span></h3>
   </div>
 <div class="subsection-content">
 <p style='margin-left:5px;margin-right:5px;'>
@@ -7354,9 +7421,10 @@ Untuk sebarang \(p\) prima, polinomial siklotomik \(\Phi_p(x)\) adalah tak-tered
 <div class="proof-box">
 <p>
 Disini kriteria Eisenstein tidak bisa langsung digunakan. Tetapi, tinjau \(f(x)=\Phi_p(x+1)\). Sebarang faktorisasi \(\Phi_p(x)=g(x)h(x)\) akan juga memberikan suatu faktorisasi \(f(x)=g_1(x)h_1(x)\), dimana \(g_1(x)=g(x+1)\) dan \(h_1(x)=h(x+1)\). Jadi bila \(\Phi_p(x)\) tereduksi di \(\mathbb{Q}[x]\), maka \(f(x)\) juga tereduksi di \(\mathbb{Q}[x]\). Dengan menggunakan Teorema binomial didapat
-$$
-f(x)=((x+1)^{p-1}-1)/((x+1)-1)=x^{p-1}+px^{p-2}+\binom{p}{2}x^{p-3}+\cdots+\binom{p}{2}x+p,
-$$
+\begin{aligned}
+f(x)&=((x+1)^{p-1}-1)/((x+1)-1)\\
+&=x^{p-1}+px^{p-2}+\binom{p}{2}x^{p-3}+\cdots+\binom{p}{2}x+p,
+\end{aligned}
 dimana \(\binom{p}{k}=\frac{p!}{k!(p-k)!}\) dan jelas bahwa \(p\) membagi \(\binom{p}{k}\) juga \(p^2\) tidak membagi \(p\) dan \(p\) tidak membagi \(1\). Maka menurut kriteria Einsenstein \(f(x)\) tak-tereduksi di \(\mathbb{Q}[x]\). Dengan demikian \(\Phi_p(x)\) tak-tereduksi di \(\mathbb{Q}[x].\qquad\boxtimes\)
 </p>
 </div>
@@ -15353,39 +15421,41 @@ print("SIMULASI KODE REED-SOLOMON")
 print("="*50)
 
 def reed_solomon_example(q, n, k, message_coeffs):
-    # Membuat field hingga GF(q)
+    # 1. Membuat field hingga GF(q)
+    # Jika q adalah perpangkatan bilangan prima (misal 8 = 2^3), gunakan nama generator 'a'
     F = GF(q, 'a')
-    a = F.gen()
     
     print(f"1. Field hingga GF({q}) = {list(F)}")
     print(f"   Karakteristik: {F.characteristic()}")
     
-    # Membentuk polinomial dari koefisien pesan
+    # 2. Membentuk polinomial dari koefisien pesan
+    # Pastikan koefisien adalah elemen dari Field F
+    message_coeffs = [F(c) for c in message_coeffs]
     R.<x> = PolynomialRing(F)
-    p = sum(message_coeffs[i] * x^i for i in range(k))
+    p = R(message_coeffs) # Cara lebih elegan membuat polinomial di Sage
     
     print(f"\n2. Polinomial pesan:")
     print(f"   Koefisien: {message_coeffs}")
     print(f"   p(x) = {p}")
     
-    # Memilih n elemen berbeda dari F untuk evaluasi
-    # Untuk RS klasik, gunakan semua elemen non-nol jika n = q-1
+    # 3. Memilih n elemen berbeda dari F untuk evaluasi
+    # RS klasik biasanya menggunakan elemen non-nol
     if n == q-1:
-        evaluation_points = [F(i) for i in range(1, q)]  # 1, 2, ..., q-1
+        evaluation_points = [F(F.list()[i]) for i in range(1, q)] 
     else:
-        evaluation_points = [F(i) for i in range(n)]
+        evaluation_points = [F(F.list()[i]) for i in range(n)]
     
-    print(f"\n3. Titik evaluasi (α_i): {evaluation_points}")
+    print(f"\n3. Titik evaluasi (alpha_i): {evaluation_points}")
     
-    # Evaluasi polinomial
+    # 4. Evaluasi polinomial (Encoding)
     codeword = [p(alpha) for alpha in evaluation_points]
-    print(f"\n4. Codeword (p(α_i)):")
+    print(f"\n4. Codeword (p(alpha_i)):")
     print(f"   c = {codeword}")
     
-    # Simulasi error
+    # 5. Simulasi error
     print(f"\n5. Simulasi error:")
-    error_positions = [0, 2]  # Error pada posisi 0 dan 2
-    error_values = [F(3), F(2)]  # Nilai error
+    error_positions = [0, 2]  
+    error_values = [F(3), F(2)] 
     
     received = list(codeword)
     for pos, err in zip(error_positions, error_values):
@@ -15396,32 +15466,31 @@ def reed_solomon_example(q, n, k, message_coeffs):
     print(f"   Error di posisi {error_positions} dengan nilai {error_values}")
     print(f"   Received word: {received}")
     
-    # Dekoding (menggunakan interpolasi Lagrange sederhana untuk kasus tanpa error)
-    # Untuk kasus dengan error, perlu algoritma seperti Berlekamp-Massey
-    print(f"\n6. Dekoding (asumsi tanpa error):")
-    # Interpolasi dari k titik pertama
+    # 6. Dekoding (Interpolasi Lagrange)
+    # Catatan: Interpolasi hanya berhasil jika TIDAK ADA error atau error sudah diperbaiki.
+    print(f"\n6. Dekoding (Interpolasi dari k titik pertama):")
     points = [(evaluation_points[i], received[i]) for i in range(k)]
     poly_interpolated = R.lagrange_polynomial(points)
-    print(f"   Interpolasi dari {k} titik pertama:")
-    print(f"   p̃(x) = {poly_interpolated}")
+    print(f"   p~(x) = {poly_interpolated}")
     
-    # Bandingkan dengan polinomial asli
+    # 7. Perbandingan
     print(f"\n7. Perbandingan:")
-    print(f"   Polinomial asli: {p}")
-    print(f"   Polinomial hasil interpolasi: {poly_interpolated}")
-    print(f"   Sama? {p == poly_interpolated}")
+    print(f"   Sama dengan asli? {p == poly_interpolated}")
     
     return p, codeword, received, poly_interpolated
 
+# --- EKSEKUSI ---
+
 print("CONTOH 1: Kode Reed-Solomon di GF(7)")
-p1, c1, r1, p_interp1 = reed_solomon_example(7, 6, 3, [1, 2, 3])  # n=6, k=3
+# n=6, k=3. d = 6-3+1 = 4. Bisa memperbaiki (4-1)/2 = 1.5 -> 1 error.
+p1, c1, r1, p_interp1 = reed_solomon_example(7, 6, 3, [1, 2, 3]) 
 
 print("\n" + "="*60)
+
 print("CONTOH 2: Kode Reed-Solomon di GF(8)")
-# GF(8) = GF(2^3)
 F8.<a> = GF(8)
-coeffs = [F8(1), a, a^2]  # 1, a, a^2
-p2, c2, r2, p_interp2 = reed_solomon_example(8, 7, 3, coeffs)
+coeffs2 = [1, a, a^2] 
+p2, c2, r2, p_interp2 = reed_solomon_example(8, 7, 3, coeffs2)
 
 print("\n" + "="*60)
 print("TEORI MATEMATIS:")
@@ -15807,11 +15876,13 @@ print()
 
 # 6. Ring bilangan bulat Gauss
 print("6. RING BILANGAN BULAT GAUSS ℤ[i]:")
-Zgi.<i> = ZZ.extension(x^2 + 1)
+# Cara mudah membuat ring bilangan bulat Gauss
+R.<x> = ZZ[]                     # ring polinomial atas ZZ
+Zgi.<i> = ZZ.extension(x^2 + 1)  # ekstensi dengan x^2+1, generator i
 print(f"   i² = {i^2}")
 print(f"   Contoh: 2+i = {2+i}")
 print(f"   Norma(2+i) = {(2+i).norm()}")
-print(f"   Apakah 2+i tak tereduksi? {(2+i).is_irreducible()}")
+print(f"   Apakah norma prima? {(2+i).norm().is_prime()} (maka 2+i irreduksibel)")
                     </script>
                 </div>
             </div>
